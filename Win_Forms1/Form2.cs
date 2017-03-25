@@ -30,10 +30,34 @@ namespace Win_Forms1
                 cname = textBox3.Text;
                 num = textBox2.Text;
                 var frm1 = new Form1();
+                frm1.FormClosed += new FormClosedEventHandler(frm1_FormClosed);
                 frm1.Show();
                 this.Hide();
             }
         }
 
+        private void frm1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.Close();
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (CloseCancel() == false)
+                e.Cancel = true;
+        }
+
+        public static bool CloseCancel()
+        {
+            const string message = "Close app?";
+            const string caption = "Exit";
+            var result = MessageBox.Show(message, caption,
+                                            MessageBoxButtons.YesNo,
+                                            MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+                return true;
+            else
+                return false;
+        }
     }
 }

@@ -20,8 +20,10 @@ namespace Win_Forms1
             this.MaximizeBox = false;
             button1.Text = Form2.cname;
             button4.Text = Form2.uname;
+            label9.Text = Form2.uname;
+            label10.Text = Form2.cname;
             label8.Text = Form2.num;
-            //if (Form2.num != "") n = Int32.Parse(Form2.num);
+            n = Int32.Parse(Form2.num);
         }
 
         private void Form1_Load_1(object sender, EventArgs e)
@@ -60,14 +62,14 @@ namespace Win_Forms1
             label6.Text = (Int32.Parse(label6.Text) + 1).ToString();
             button3.Text = u.ToString();
             button2.Text = c.ToString();
-            if (u>c)
+            if (u > c)
             {
                 button3.BackColor = Color.Green;
                 button2.BackColor = Color.Red;
 
                 label3.Text = (Int32.Parse(label3.Text) + 1).ToString();
             }
-            else if(c>u)
+            else if (c > u)
             {
                 button3.BackColor = Color.Red;
                 button2.BackColor = Color.Green;
@@ -111,5 +113,25 @@ namespace Win_Forms1
                 //this.Close();
             }
         }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (CloseCancel() == false)
+                e.Cancel = true;
+        }
+
+        public static bool CloseCancel()
+        {
+            const string message = "Close app?";
+            const string caption = "Exit";
+            var result = MessageBox.Show(message, caption,
+                                            MessageBoxButtons.YesNo,
+                                            MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+                return true;
+            else
+                return false;
+        }
     }
+    
 }
