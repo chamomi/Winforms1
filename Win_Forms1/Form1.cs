@@ -18,7 +18,6 @@ namespace Win_Forms1
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            //this.MaximizeBox = false;
             label9.Text = Form2.uname;
             label10.Text = Form2.cname;
             label8.Text = Form2.num;
