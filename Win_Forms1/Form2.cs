@@ -14,6 +14,7 @@ namespace Win_Forms1
     {
         public static String uname="user", cname="cpu", num="10";
         static int f = 0;
+        int q;
         public Form2()
         {
             InitializeComponent();
@@ -24,6 +25,10 @@ namespace Win_Forms1
             if((textBox1.Text=="")|| (textBox2.Text == "")|| (textBox3.Text == ""))
             {
                 DialogResult dialogResult = MessageBox.Show("Fill all the fields", "Error", MessageBoxButtons.OK);
+            }
+            else if (!int.TryParse(textBox2.Text, out q))
+            {
+                DialogResult dialogResult = MessageBox.Show("Round is not integer", "Error", MessageBoxButtons.OK);
             }
             else
             {

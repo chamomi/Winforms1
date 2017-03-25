@@ -238,6 +238,7 @@
             this.highscoresToolStripMenuItem.Name = "highscoresToolStripMenuItem";
             this.highscoresToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
             this.highscoresToolStripMenuItem.Text = "Highscores";
+            this.highscoresToolStripMenuItem.Click += new System.EventHandler(this.highscoresToolStripMenuItem_Click);
             // 
             // Form1
             // 

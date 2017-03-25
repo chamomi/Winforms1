@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Win_Forms1
 {
@@ -22,6 +23,7 @@ namespace Win_Forms1
             label10.Text = Form2.cname;
             label8.Text = Form2.num;
             n = Int32.Parse(Form2.num);
+            //File.Create(@".\highs.high");
         }
 
         private void Form1_Load_1(object sender, EventArgs e)
@@ -76,6 +78,8 @@ namespace Win_Forms1
             }
             if (round == n)
             {
+                //write to file
+                File.AppendAllText(@".\highs.high", label10.Text + "," + label3.Text + "," + label8.Text + "\n");
                 string s;
                 if (Int32.Parse(label3.Text) > Int32.Parse(label4.Text)) s = "Win! Start new game?";
                 else s = "Lose! Start new game?";
@@ -103,6 +107,12 @@ namespace Win_Forms1
         {
             if (CloseCancel() == false)
                 e.Cancel = true;
+        }
+
+        private void highscoresToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //read file
+
         }
 
         public static bool CloseCancel()
