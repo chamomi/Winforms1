@@ -13,6 +13,7 @@ namespace Win_Forms1
     public partial class Form2 : Form
     {
         public static String uname="user", cname="cpu", num="10";
+        static int f = 0;
         public Form2()
         {
             InitializeComponent();
@@ -38,6 +39,7 @@ namespace Win_Forms1
 
         private void frm1_FormClosed(object sender, FormClosedEventArgs e)
         {
+            f = 1;
             this.Close();
         }
 
@@ -49,9 +51,9 @@ namespace Win_Forms1
 
         public static bool CloseCancel()
         {
-            const string message = "Close app?";
-            const string caption = "Exit";
-            var result = MessageBox.Show(message, caption,
+            var result= DialogResult.Yes;
+            if (f == 0) 
+                result = MessageBox.Show("Close app?", "Exit",
                                             MessageBoxButtons.YesNo,
                                             MessageBoxIcon.Question);
             if (result == DialogResult.Yes)

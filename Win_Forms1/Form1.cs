@@ -17,9 +17,7 @@ namespace Win_Forms1
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-            button1.Text = Form2.cname;
-            button4.Text = Form2.uname;
+            //this.MaximizeBox = false;
             label9.Text = Form2.uname;
             label10.Text = Form2.cname;
             label8.Text = Form2.num;
@@ -28,11 +26,6 @@ namespace Win_Forms1
 
         private void Form1_Load_1(object sender, EventArgs e)
         {
-            //newGameToolStripMenuItem_Click(sender, e);
-            //button1.Text = Form2.cname;
-            //button4.Text = Form2.uname;
-            //label8.Text = Form2.num;
-            //if(Form2.num!="") n = Int32.Parse(Form2.num);
         }
 
         private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
@@ -101,16 +94,8 @@ namespace Win_Forms1
                 else if (dialogResult == DialogResult.No)
                 {
                     button4.Enabled = false;
-                    DialogResult dialogResult1 = MessageBox.Show("Do you want to close the game?", "End", MessageBoxButtons.YesNo);
-                    if (dialogResult1 == DialogResult.Yes)
-                    {
-                        this.Close();
-                    }
+                    this.Close();
                 }
-                //var end = new End();
-                //end.ShowDialog();
-                //button4.Enabled = false;
-                //this.Close();
             }
         }
 
@@ -122,9 +107,7 @@ namespace Win_Forms1
 
         public static bool CloseCancel()
         {
-            const string message = "Close app?";
-            const string caption = "Exit";
-            var result = MessageBox.Show(message, caption,
+            var result = MessageBox.Show("Close app?", "Exit",
                                             MessageBoxButtons.YesNo,
                                             MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
