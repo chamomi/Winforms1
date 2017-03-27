@@ -17,7 +17,7 @@ namespace Win_Forms1
         int q;
         public Form2()
         {
-            InitializeComponent();
+            InitializeComponent();         
         }
 
         private void button1_Click(object sender, EventArgs e)

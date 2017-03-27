@@ -14,12 +14,13 @@ namespace Win_Forms1
     public partial class Form1 : Form
     {
         int round = 0, n=10;
+        int rounds = 0;
         public Form1()
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            label9.Text = Form2.uname;
-            label10.Text = Form2.cname;
+            label9.Text = Form2.cname;
+            label10.Text = Form2.uname;
             label8.Text = Form2.num;
             n = Int32.Parse(Form2.num);
             //File.Create(@".\highs.high");
@@ -33,6 +34,7 @@ namespace Win_Forms1
         {
             var frm2 = new Form2();
             frm2.Show();
+            //ParentForm.Show();
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -78,7 +80,7 @@ namespace Win_Forms1
             if (round == n)
             {
                 //write to file
-                File.AppendAllText(@".\highs.high", label10.Text + "," + label3.Text + "," + label8.Text + "\n");
+                File.AppendAllText(@".\highsc.highs", label10.Text + "," + label3.Text + "," + label8.Text + "\n");
                 string s;
                 if (Int32.Parse(label3.Text) > Int32.Parse(label4.Text)) s = "Win! Start new game?";
                 else s = "Lose! Start new game?";
@@ -111,7 +113,76 @@ namespace Win_Forms1
         private void highscoresToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //read file
+            var high = new Highscores();
+            high.ShowDialog();
+        }
 
+        //save-load
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFile1 = new SaveFileDialog();
+            saveFile1.Filter = "wargame files (*.wargame)|*.wargame";
+            if (saveFile1.ShowDialog() == DialogResult.OK)
+            {
+                String path = saveFile1.FileName;
+                File.AppendAllText(path, Form2.uname + "," + label3.Text + "," + Form2.cname + "," + label4.Text + "," + n + "," + label6.Text +"\n");
+            }
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFile1 = new OpenFileDialog();
+            openFile1.DefaultExt = "*.wargame";
+            openFile1.Filter = "wargame Files(.wargame)|*.wargame";
+
+
+            if (openFile1.ShowDialog() == System.Windows.Forms.DialogResult.OK && openFile1.FileName.Length > 0)
+            {
+                String path = openFile1.FileName;
+
+                string text = System.IO.File.ReadAllText(path);
+                string[] data = text.Split(',');
+                button2.BackColor = Color.Transparent;
+                button3.BackColor = Color.Transparent;
+                label10.Text = data[0];
+                label3.Text = data[1];
+                label9.Text = data[2];
+                label4.Text = data[3];
+                label8.Text = data[4];
+                label6.Text = data[5];
+                n = Int32.Parse(data[4]);
+            }
+        }
+
+        //autoplay
+        private void button5_Click(object sender, EventArgs e)
+        {
+            button5.Text = "Stop";
+            int time = trackBar1.Value;
+            Timer timer1 = new Timer();
+            timer1.Tick += new EventHandler(timer1_Tick);
+            timer1.Interval = time;
+            rounds = Int32.Parse(textBox1.Text)- Int32.Parse(label6.Text);
+            timer1.Enabled = true;
+            timer1.Start();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (rounds == 0)
+            {
+                timer1.Stop();
+                timer1.Enabled = false;
+                rounds = 0;
+                button5.Text = "Start";
+            }
+            else
+            {
+                timer1.Stop();
+                button4.PerformClick();
+                rounds--;
+                timer1.Start();
+            }
         }
 
         public static bool CloseCancel()
