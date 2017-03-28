@@ -195,6 +195,11 @@ namespace Win_Forms1
             }
         }
 
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
         public static bool CloseCancel()
         {
             var result = MessageBox.Show("Close app?", "Exit",
