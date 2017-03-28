@@ -35,7 +35,7 @@ namespace Win_Forms1
                 uname = textBox1.Text;
                 cname = textBox3.Text;
                 num = textBox2.Text;
-                var frm1 = new Form1();
+                var frm1 = new Form1(this);
                 frm1.FormClosed += new FormClosedEventHandler(frm1_FormClosed);
                 frm1.Show();
                 this.Hide();

@@ -15,15 +15,17 @@ namespace Win_Forms1
     {
         int round = 0, n=10;
         int rounds = 0;
-        public Form1()
+        Form parent;
+        bool stop = false;
+        public Form1(Form par)
         {
             InitializeComponent();
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            //this.FormBorderStyle = FormBorderStyle.FixedSingle;
             label9.Text = Form2.cname;
             label10.Text = Form2.uname;
             label8.Text = Form2.num;
             n = Int32.Parse(Form2.num);
-            //File.Create(@".\highs.high");
+            parent = par;
         }
 
         private void Form1_Load_1(object sender, EventArgs e)
@@ -32,9 +34,7 @@ namespace Win_Forms1
 
         private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var frm2 = new Form2();
-            frm2.Show();
-            //ParentForm.Show();
+            parent.Show();
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -81,25 +81,33 @@ namespace Win_Forms1
             {
                 //write to file
                 File.AppendAllText(@".\highsc.highs", label10.Text + "," + label3.Text + "," + label8.Text + "\n");
-                string s;
-                if (Int32.Parse(label3.Text) > Int32.Parse(label4.Text)) s = "Win! Start new game?";
-                else s = "Lose! Start new game?";
-                DialogResult dialogResult = MessageBox.Show(s, "End", MessageBoxButtons.YesNo);
-                if (dialogResult == DialogResult.Yes)
+                DialogResult dires = MessageBox.Show("Show postgame stats?", "Stats", MessageBoxButtons.YesNo);
+                if (dires == DialogResult.No)
                 {
-                    round = 0;
-                    label3.Text = 0.ToString();
-                    label4.Text = 0.ToString();
-                    button2.BackColor = Color.Transparent;
-                    button3.BackColor = Color.Transparent;
-                    label6.Text = "0";
-                    button3.Text = "";
-                    button2.Text = "";
+                    string s;
+                    if (Int32.Parse(label3.Text) > Int32.Parse(label4.Text)) s = "Win! Start new game?";
+                    else s = "Lose! Start new game?";
+                    DialogResult dialogResult = MessageBox.Show(s, "End", MessageBoxButtons.YesNo);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        round = 0;
+                        label3.Text = 0.ToString();
+                        label4.Text = 0.ToString();
+                        button2.BackColor = Color.Transparent;
+                        button3.BackColor = Color.Transparent;
+                        label6.Text = "0";
+                        button3.Text = "";
+                        button2.Text = "";
+                    }
+                    else if (dialogResult == DialogResult.No)
+                    {
+                        button4.Enabled = false;
+                        this.Close();
+                    }
                 }
-                else if (dialogResult == DialogResult.No)
+                else if (dires == DialogResult.Yes)
                 {
-                    button4.Enabled = false;
-                    this.Close();
+                    //show stats
                 }
             }
         }
@@ -157,11 +165,11 @@ namespace Win_Forms1
         //autoplay
         private void button5_Click(object sender, EventArgs e)
         {
+            if (button5.Text == "Stop") stop = true;
             button5.Text = "Stop";
-            int time = trackBar1.Value;
             Timer timer1 = new Timer();
             timer1.Tick += new EventHandler(timer1_Tick);
-            timer1.Interval = time;
+            timer1.Interval = trackBar1.Value;
             rounds = Int32.Parse(textBox1.Text)- Int32.Parse(label6.Text);
             timer1.Enabled = true;
             timer1.Start();
@@ -169,11 +177,12 @@ namespace Win_Forms1
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (rounds == 0)
+            if ((rounds == 0)||(stop== true))
             {
                 timer1.Stop();
                 timer1.Enabled = false;
                 rounds = 0;
+                stop = false;
                 button5.Text = "Start";
             }
             else
@@ -181,6 +190,7 @@ namespace Win_Forms1
                 timer1.Stop();
                 button4.PerformClick();
                 rounds--;
+                timer1.Interval = trackBar1.Value;
                 timer1.Start();
             }
         }
