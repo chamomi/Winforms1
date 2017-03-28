@@ -17,6 +17,7 @@ namespace Win_Forms1
         int rounds = 0;
         Form parent;
         bool stop = false;
+        static int[][] history;
         public Form1(Form par)
         {
             InitializeComponent();
@@ -26,6 +27,9 @@ namespace Win_Forms1
             label8.Text = Form2.num;
             n = Int32.Parse(Form2.num);
             parent = par;
+            history = new int[2][];
+            history[0] = new int[n];
+            history[1] = new int[n];
         }
 
         private void Form1_Load_1(object sender, EventArgs e)
@@ -59,6 +63,8 @@ namespace Win_Forms1
             label6.Text = (Int32.Parse(label6.Text) + 1).ToString();
             button3.Text = u.ToString();
             button2.Text = c.ToString();
+            history[0][round-1] = u;
+            history[1][round-1] = c;
             if (u > c)
             {
                 button3.BackColor = Color.Green;
@@ -109,6 +115,8 @@ namespace Win_Forms1
                 else if (dires == DialogResult.Yes)
                 {
                     //show stats
+                    //var stat = new Stats(history);
+                    //stat.ShowDialog();
                 }
             }
         }
@@ -193,11 +201,6 @@ namespace Win_Forms1
                 timer1.Interval = trackBar1.Value;
                 //timer1.Start();
             }
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         public static bool CloseCancel()
