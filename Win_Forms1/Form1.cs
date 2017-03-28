@@ -21,7 +21,6 @@ namespace Win_Forms1
         public Form1(Form par)
         {
             InitializeComponent();
-            //this.FormBorderStyle = FormBorderStyle.FixedSingle;
             label9.Text = Form2.cname;
             label10.Text = Form2.uname;
             label8.Text = Form2.num;
@@ -91,32 +90,33 @@ namespace Win_Forms1
                 DialogResult dires = MessageBox.Show("Show postgame stats?", "Stats", MessageBoxButtons.YesNo);
                 if (dires == DialogResult.No)
                 {
-                    string s;
-                    if (Int32.Parse(label3.Text) > Int32.Parse(label4.Text)) s = "Win! Start new game?";
-                    else s = "Lose! Start new game?";
-                    DialogResult dialogResult = MessageBox.Show(s, "End", MessageBoxButtons.YesNo);
-                    if (dialogResult == DialogResult.Yes)
-                    {
-                        round = 0;
-                        label3.Text = 0.ToString();
-                        label4.Text = 0.ToString();
-                        button2.BackColor = Color.Transparent;
-                        button3.BackColor = Color.Transparent;
-                        label6.Text = "0";
-                        button3.Text = "";
-                        button2.Text = "";
-                    }
-                    else if (dialogResult == DialogResult.No)
-                    {
-                        button4.Enabled = false;
-                        this.Close();
-                    }
                 }
                 else if (dires == DialogResult.Yes)
                 {
                     //show stats
-                    //var stat = new Stats(history);
-                    //stat.ShowDialog();
+                    var stat = new Stats(history.ToArray());
+                    stat.ShowDialog();
+                }
+
+                string s;
+                if (Int32.Parse(label3.Text) > Int32.Parse(label4.Text)) s = "Win! Start new game?";
+                else s = "Lose! Start new game?";
+                DialogResult dialogResult = MessageBox.Show(s, "End", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    round = 0;
+                    label3.Text = 0.ToString();
+                    label4.Text = 0.ToString();
+                    button2.BackColor = Color.Transparent;
+                    button3.BackColor = Color.Transparent;
+                    label6.Text = "0";
+                    button3.Text = "";
+                    button2.Text = "";
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    button4.Enabled = false;
+                    this.Close();
                 }
             }
         }
@@ -188,7 +188,6 @@ namespace Win_Forms1
             if ((rounds == 0)||(stop == true)||(Int32.Parse(label6.Text)== Int32.Parse(label8.Text)))
             {
                 timer1.Stop();
-                timer1.Enabled = false;
                 rounds = 0;
                 stop = false;
                 button5.Text = "Start";
@@ -199,7 +198,6 @@ namespace Win_Forms1
                 button4.PerformClick();
                 rounds--;
                 timer1.Interval = trackBar1.Value;
-                //timer1.Start();
             }
         }
 
