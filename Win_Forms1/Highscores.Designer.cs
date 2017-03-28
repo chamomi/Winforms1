@@ -92,7 +92,6 @@
             this.ClientSize = new System.Drawing.Size(253, 261);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button1);
-            this.Name = "Highscores";
             this.Text = "Highscores";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);

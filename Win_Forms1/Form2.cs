@@ -15,6 +15,7 @@ namespace Win_Forms1
         public static String uname="user", cname="cpu", num="10";
         static int f = 0;
         int q;
+        Form frm1;
         public Form2()
         {
             InitializeComponent();         
@@ -35,7 +36,12 @@ namespace Win_Forms1
                 uname = textBox1.Text;
                 cname = textBox3.Text;
                 num = textBox2.Text;
-                var frm1 = new Form1(this);
+                //if (frm1 == null)
+                //{
+                //    frm1 = new Form1(this);
+                //    frm1.FormClosed += new FormClosedEventHandler(frm1_FormClosed);
+                //}
+                frm1 = new Form1(this);
                 frm1.FormClosed += new FormClosedEventHandler(frm1_FormClosed);
                 frm1.Show();
                 this.Hide();

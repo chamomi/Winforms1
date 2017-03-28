@@ -19,19 +19,13 @@ namespace Win_Forms1
             InitializeComponent();
             string line;
             string[] it;
-            //ListViewItem item;
             System.IO.StreamReader file = new System.IO.StreamReader(@".\highsc.highs");
             while ((line = file.ReadLine()) != null)
             {
                 it = line.Split(',');
-                dataGridView1.Rows.Add(it);
-                //item = new ListViewItem(it[0]);
-                //listView1.Items.Add(item);
-                //item = new ListViewItem(it[1]);
-                //listView2.Items.Add(item);
-                //item = new ListViewItem(it[2]);
-                //listView3.Items.Add(item);
+                dataGridView1.Rows.Add(it[0], Int32.Parse(it[1]), Int32.Parse(it[2]));
                 counter++;
+                this.dataGridView1.Sort(this.dataGridView1.Columns["Round"], ListSortDirection.Descending);
                 this.dataGridView1.Sort(this.dataGridView1.Columns["Score"], ListSortDirection.Descending);
             }
 

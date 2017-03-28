@@ -35,6 +35,7 @@ namespace Win_Forms1
         private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
             parent.Show();
+            this.Hide();
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -171,13 +172,12 @@ namespace Win_Forms1
             timer1.Tick += new EventHandler(timer1_Tick);
             timer1.Interval = trackBar1.Value;
             rounds = Int32.Parse(textBox1.Text)- Int32.Parse(label6.Text);
-            timer1.Enabled = true;
             timer1.Start();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if ((rounds == 0)||(stop== true))
+            if ((rounds == 0)||(stop == true)||(Int32.Parse(label6.Text)== Int32.Parse(label8.Text)))
             {
                 timer1.Stop();
                 timer1.Enabled = false;
@@ -191,7 +191,7 @@ namespace Win_Forms1
                 button4.PerformClick();
                 rounds--;
                 timer1.Interval = trackBar1.Value;
-                timer1.Start();
+                //timer1.Start();
             }
         }
 
